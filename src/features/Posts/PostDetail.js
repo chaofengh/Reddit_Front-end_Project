@@ -21,7 +21,7 @@ const PostDetail = () => {
         if (permalink && permalink !== currentPost) {
             dispatch(getPostDetails(permalink));
         }
-    }, [permalink, currentPost, dispatch]);
+    }, [dispatch,permalink, currentPost]);
 
     const goBack = () => {
         navigate('/');

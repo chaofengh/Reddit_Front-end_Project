@@ -1,5 +1,4 @@
 // src/features/Posts/PostsSlice.js
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Reddit from '../../Reddit/Reddit';
 
@@ -78,16 +77,13 @@ const postsSlice = createSlice({
             .addCase(getPostDetails.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
-            }).addCase(getPostsBySubreddit.pending, (state) =>{
+            })
+            .addCase(getPostsBySubreddit.pending, (state) => {
                 state.loading = true;
                 state.error = null;
-            }).addCase(getPostsBySubreddit.fulfilled, (state, action) => {
-                if (state.filter !== action.payload.subreddit) {
-                    state.posts = action.payload.posts; // Replace posts if filter changed
-                } else {
-                    state.posts = state.posts.concat(action.payload.posts);
-                }
-                state.after = action.payload.after;
+            })
+            .addCase(getPostsBySubreddit.fulfilled, (state, action) => {
+                state.posts = action.payload;
                 state.loading = false;
                 state.error = null;
             })
@@ -107,7 +103,7 @@ export const selectFilteredPosts = state => {
         return state.posts.posts.filter(post => post.subreddit === filter);
     }
     return state.posts.posts;
-}
+};
 export const selectPostDetails = (state, permalink) => state.posts.postDetails[permalink];
 export const selectComments = (state, permalink) => state.posts.comments[permalink];
 export const selectCurrentPost = state => state.posts.currentPost;

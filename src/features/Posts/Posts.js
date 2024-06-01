@@ -13,18 +13,16 @@ const Posts = () => {
     const error = useSelector(selectError);
     const {subreddit}= useParams()
 
+
     useEffect(() => {
         if (subreddit) {
-            dispatch(setFilter(subreddit));
+            // dispatch(setFilter(subreddit));
+            dispatch(getPostsBySubreddit(subreddit));
         } else {
-            dispatch(setFilter(null));
-            if (posts.length === 0) {
-                dispatch(getPosts());
-            }
+            dispatch(getPosts());
         }
-    }, [subreddit, posts.length, dispatch]);
-
-
+    }, [dispatch,subreddit]); 
+    
     const loadMore = (event) => {
         event.preventDefault();
         if (subreddit) {

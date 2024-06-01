@@ -1,5 +1,4 @@
 // src/features/SubReddits/SubRedditsSlice.js
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Reddit from '../../Reddit/Reddit';
 
@@ -34,7 +33,7 @@ const subRedditsSlice = createSlice({
     },
 });
 
-export const selectSubReddits = (state) => state.subReddits.subReddits;
+export const selectSubReddits = (state) => state.subReddits.subReddits; // Ensure this key matches the state structure
 export const selectLoading = (state) => state.subReddits.loading;
 export const selectError = (state) => state.subReddits.error;
 

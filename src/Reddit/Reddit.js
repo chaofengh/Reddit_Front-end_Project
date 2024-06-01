@@ -23,6 +23,7 @@ const Reddit = {
         const data = await response.json();
         return data.data.children.map(sub => sub.data);
     }
+    
 };
 
 export default Reddit;
