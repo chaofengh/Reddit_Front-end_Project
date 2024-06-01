@@ -1,0 +1,43 @@
+.SubReddits {
+    width: 250px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-right: 1px solid #ddd;
+    position: fixed;
+    height: 100vh;
+    overflow: auto;
+    z-index: 1;
+  }
+  
+  .SubReddits h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    font-family: 'Noto Sans', sans-serif;
+  }
+  
+  .SubReddits ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .SubReddits li {
+    padding: 10px 0;
+    cursor: pointer;
+    font-family: 'Noto Sans', sans-serif;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+  
+  .SubReddits li:hover {
+    background-color: #e0e0e0; /* Change background color on hover */
+    color: black; /* Optional: Change text color on hover */
+}
+
+.subreddit-logo {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    border-radius: 50%; /* Optional: make the logo round */
+}
