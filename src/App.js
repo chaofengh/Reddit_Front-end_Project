@@ -7,13 +7,14 @@ import { getPosts } from './features/Posts/PostsSlice';
 import { useDispatch } from 'react-redux';
 import SubReddits from './features/SubReddits/SubReddits';
 import {fetchSubReddits} from './features/SubReddits/SubRedditsSlice';
+import Search from './features/Search/Search';
 const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getPosts());
         dispatch(fetchSubReddits());
-        
+
     }, [dispatch]);
 
     return (
@@ -22,6 +23,7 @@ const App = () => {
                 <SubReddits />
                 <header className="App-header">
                     <h1>Reddit Posts</h1>
+                    <Search/>
                 </header>
                 <main>
                     <Routes>

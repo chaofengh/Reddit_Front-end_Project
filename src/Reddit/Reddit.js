@@ -25,6 +25,11 @@ const Reddit = {
         const response = await fetch(`${BASE_URL}/subreddits/popular.json`);
         const data = await response.json();
         return data.data.children.map(sub => sub.data);
+    },
+    async searchPosts(query) {
+        const response = await fetch(`${BASE_URL}/search.json?q=${query}&limit=50`);
+        const data = await response.json();
+        return data.data.children.map(post => post.data);
     }
     
 };

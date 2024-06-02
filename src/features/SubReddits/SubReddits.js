@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectSubReddits, selectLoading, selectError } from './SubRedditsSlice';
 import './SubReddits.css';
 import { useNavigate } from 'react-router-dom';
-import { getPostsBySubreddit,setFilter } from '../Posts/PostsSlice';
+import { getPostsBySubreddit,setFilter,clearSearchResult } from '../Posts/PostsSlice';
 
 const SubReddits = () => {
     const dispatch = useDispatch();
@@ -15,6 +15,7 @@ const SubReddits = () => {
     const navigate = useNavigate();
 
     const handleClick = (subreddit) => {
+        dispatch(clearSearchResult())
         dispatch(setFilter(subreddit));
         dispatch(getPostsBySubreddit({subreddit}))
         navigate(subreddit);

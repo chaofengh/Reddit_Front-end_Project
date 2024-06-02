@@ -23,6 +23,13 @@ export const getPostsBySubreddit = createAsyncThunk('posts/getPostsBySubreddit',
     return { posts: children.map(post => post.data), after: newAfter };
 });
 
+// Search posts by query
+export const searchPosts = createAsyncThunk('posts/searchPosts', async (query) => {
+    const posts = await Reddit.searchPosts(query);
+    return posts;
+});
+
+
 const postsSlice = createSlice({
     name: 'posts',
     initialState: {
@@ -33,7 +40,8 @@ const postsSlice = createSlice({
         after: null,
         loading: false,
         error: null,
-        filter: null
+        filter: null,
+        searchResults:[]
     },
     reducers: {
         clearComments: (state) => {
@@ -41,6 +49,9 @@ const postsSlice = createSlice({
         },
         setFilter: (state, action) => {
             state.filter = action.payload;
+        },
+        clearSearchResult: (state) =>{
+            state.searchResults = [];
         }
     },
     extraReducers: (builder) => {
@@ -91,11 +102,24 @@ const postsSlice = createSlice({
             .addCase(getPostsBySubreddit.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
+            })
+            .addCase(searchPosts.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(searchPosts.fulfilled, (state, action) => {
+                state.searchResults = action.payload;
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(searchPosts.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
             });
     }
 });
 
-export const { clearComments, setFilter } = postsSlice.actions;
+export const { clearComments, setFilter,clearSearchResult } = postsSlice.actions;
 export default postsSlice.reducer;
 export const selectPosts = state => state.posts.posts;
 export const selectFilteredPosts = state => {
@@ -110,3 +134,4 @@ export const selectComments = (state, permalink) => state.posts.comments[permali
 export const selectCurrentPost = state => state.posts.currentPost;
 export const selectLoading = state => state.posts.loading;
 export const selectError = state => state.posts.error;
+export const selectSearchResults = state => state.posts.searchResults;
