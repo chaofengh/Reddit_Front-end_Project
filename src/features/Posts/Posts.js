@@ -1,8 +1,8 @@
 // src/features/Posts/Posts.js
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPosts,getPostsBySubreddit,selectFilteredPosts,setFilter, selectError, selectLoading } from './PostsSlice';
+import { getPosts,getPostsBySubreddit,selectFilteredPosts, selectError, selectLoading } from './PostsSlice';
 import { Link, useParams } from 'react-router-dom';
 import Post from './Post';
 
@@ -11,24 +11,18 @@ const Posts = () => {
     const posts = useSelector(selectFilteredPosts);
     const loading = useSelector(selectLoading);
     const error = useSelector(selectError);
-    const {subreddit}= useParams()
+    let {subreddit}= useParams()
+    
 
-
-    useEffect(() => {
-        if (subreddit) {
-            // dispatch(setFilter(subreddit));
-            dispatch(getPostsBySubreddit(subreddit));
-        } else {
-            dispatch(getPosts());
-        }
-    }, [dispatch,subreddit]); 
     
     const loadMore = (event) => {
         event.preventDefault();
+        const after = posts.length > 0 ? posts[posts.length - 1].name : null;
         if (subreddit) {
-            dispatch(getPostsBySubreddit({ subreddit, after: posts.length }));
+            subreddit ='r/' + subreddit
+            dispatch(getPostsBySubreddit( {subreddit, after} ));
         } else {
-            dispatch(getPosts());
+            dispatch(getPosts(after));
         }
     };
 

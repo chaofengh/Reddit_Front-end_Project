@@ -4,16 +4,16 @@ import Posts from './features/Posts/Posts';
 import PostDetail from './features/Posts/PostDetail';
 import './App.css';
 import { getPosts } from './features/Posts/PostsSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectPosts } from './features/Posts/PostsSlice';
+import { useDispatch } from 'react-redux';
 import SubReddits from './features/SubReddits/SubReddits';
-
+import {fetchSubReddits} from './features/SubReddits/SubRedditsSlice';
 const App = () => {
     const dispatch = useDispatch();
-    const posts = useSelector(selectPosts);
 
     useEffect(() => {
         dispatch(getPosts());
+        dispatch(fetchSubReddits());
+        
     }, [dispatch]);
 
     return (
@@ -25,7 +25,7 @@ const App = () => {
                 </header>
                 <main>
                     <Routes>
-                        <Route path="/" element={<Posts posts={posts} />} />
+                        <Route path="/" element={<Posts/>} />
                         <Route path="/r/:subreddit" element={<Posts />} />
                         <Route path="/post/*" element={<PostDetail />} />
                     </Routes>

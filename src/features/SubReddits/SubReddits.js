@@ -1,11 +1,11 @@
 // src/features/SubReddits/SubReddits.js
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSubReddits, selectSubReddits, selectLoading, selectError } from './SubRedditsSlice';
+import { selectSubReddits, selectLoading, selectError } from './SubRedditsSlice';
 import './SubReddits.css';
 import { useNavigate } from 'react-router-dom';
-import { getPostsBySubreddit } from '../Posts/PostsSlice';
+import { getPostsBySubreddit,setFilter } from '../Posts/PostsSlice';
 
 const SubReddits = () => {
     const dispatch = useDispatch();
@@ -14,13 +14,10 @@ const SubReddits = () => {
     const error = useSelector(selectError);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        dispatch(fetchSubReddits());
-    }, [dispatch]);
-
     const handleClick = (subreddit) => {
+        dispatch(setFilter(subreddit));
         dispatch(getPostsBySubreddit({subreddit}))
-        navigate(`${subreddit}`);
+        navigate(subreddit);
     };
 
     if (loading) return <div>Loading...</div>;

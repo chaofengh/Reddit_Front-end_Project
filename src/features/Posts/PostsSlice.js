@@ -3,15 +3,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Reddit from '../../Reddit/Reddit';
 
 // Fetch posts from Reddit
-export const getPosts = createAsyncThunk('Posts/getPosts', async (_, { getState }) => {
-    const state = getState();
-    const after = state.posts.after;
+export const getPosts = createAsyncThunk('posts/getPosts', async (after = null) => {
     const { children, after: newAfter } = await Reddit.getData(50, after);
     return { posts: children.map(post => post.data), after: newAfter };
 });
 
 // Fetch post details including comments
-export const getPostDetails = createAsyncThunk('Posts/getPostDetails', async (permalink) => {
+export const getPostDetails = createAsyncThunk('posts/getPostDetails', async (permalink) => {
     const response = await fetch(`https://www.reddit.com${permalink}.json`);
     const data = await response.json();
     const postData = data[0].data.children[0].data;
@@ -20,13 +18,13 @@ export const getPostDetails = createAsyncThunk('Posts/getPostDetails', async (pe
 });
 
 // Async thunk to fetch posts for a specific subreddit
-export const getPostsBySubreddit = createAsyncThunk('posts/getPostsBySubreddit', async (subreddit) => {
-    const posts = await Reddit.fetchPostsBySubReddit(subreddit);
-    return posts;
+export const getPostsBySubreddit = createAsyncThunk('posts/getPostsBySubreddit', async ({ subreddit, after = null }) => {
+    const { children, after: newAfter } = await Reddit.fetchPostsBySubReddit({ subreddit, after });
+    return { posts: children.map(post => post.data), after: newAfter };
 });
 
 const postsSlice = createSlice({
-    name: 'Posts',
+    name: 'posts',
     initialState: {
         posts: [],
         postDetails: {},
@@ -54,7 +52,7 @@ const postsSlice = createSlice({
             .addCase(getPosts.fulfilled, (state, action) => {
                 const existingIds = new Set(state.posts.map(post => post.id));
                 const newPosts = action.payload.posts.filter(post => !existingIds.has(post.id));
-                state.posts = state.posts.concat(newPosts);
+                state.posts = [...state.posts, ...newPosts];
                 state.after = action.payload.after;
                 state.loading = false;
                 state.error = null;
@@ -83,7 +81,10 @@ const postsSlice = createSlice({
                 state.error = null;
             })
             .addCase(getPostsBySubreddit.fulfilled, (state, action) => {
-                state.posts = action.payload;
+                const existingIds = new Set(state.posts.map(post => post.id));
+                const newPosts = action.payload.posts.filter(post => !existingIds.has(post.id));
+                state.posts = [...state.posts, ...newPosts];
+                state.after = action.payload.after;
                 state.loading = false;
                 state.error = null;
             })
@@ -100,7 +101,7 @@ export const selectPosts = state => state.posts.posts;
 export const selectFilteredPosts = state => {
     const filter = state.posts.filter;
     if (filter) {
-        return state.posts.posts.filter(post => post.subreddit === filter);
+        return state.posts.posts.filter(post => post.subreddit_name_prefixed === filter);
     }
     return state.posts.posts;
 };
