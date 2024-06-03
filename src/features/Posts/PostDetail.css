@@ -1,8 +1,8 @@
 /* PostDetail.css */
 .PostDetail {
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
-    padding: 0 200px;
+    padding: 0 25vw;
     font-family: Arial, sans-serif;
     height: 90vh; /* Set a fixed height */
     overflow-y: auto; /* Enable vertical scrolling */
@@ -67,4 +67,56 @@
     background-color: #E5EBEE;
     opacity: 1;
     padding: 0 5px;
+}
+
+@media (max-width: 1024px) {
+    .PostDetail{
+        width: 100vw;
+        padding: 0;
+        height: auto;
+    }
+
+    .Comment{
+        padding: 0;
+        width: 95vw;
+        height: auto;
+    }
+
+    p{
+        font-size: 5px;
+    }
+
+    h2{
+        width: 95vw;
+    }
+
+    .PostDetail video, .PostDetail img {
+        width: 95vw;
+    }
+}
+
+@media (max-width: 375px) {
+    .PostDetail{
+        width: 100vw;
+        padding: 0;
+        height: auto;
+    }
+
+    .Comment{
+        padding: 0;
+        width: 95vw;
+        height: auto;
+    }
+
+    p{
+        font-size: 5px;
+    }
+
+    h2{
+        width: 95vw;
+    }
+
+    .PostDetail video, .PostDetail img {
+        width: 95vw;
+    }
 }

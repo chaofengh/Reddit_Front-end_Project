@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { searchPosts } from '../Posts/PostsSlice';
+import './Search.css';
 
 const Search = () => {
     const [query, setQuery] = useState('');
@@ -17,14 +18,17 @@ const Search = () => {
 
     return (
         <div className="Search">
-            <form onSubmit={handleSearch}>
+            <form onSubmit={handleSearch} className = 'Search_form'>      
+                    <span 
+                        className="material-symbols-outlined">
+                            search
+                    </span>
                 <input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search Reddit posts"
+                    placeholder="Search Reddit Posts"
                 />
-                <button type="submit">Search</button>
             </form>
         </div>
     );

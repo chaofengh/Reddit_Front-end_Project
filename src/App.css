@@ -1,3 +1,4 @@
+/* App.CS */
 main {
   display: flex;
   flex-direction: column;
@@ -5,14 +6,71 @@ main {
   justify-content: center;
   height: 90vh; /* Ensure this takes the remaining height after the header */
   position: relative;
+  overflow: hidden;
 
 }
 
-.App-header{
+.App-header {
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 600px; /* Set a maximum width for the header content */
+  margin: 0 auto; /* Center the header content horizontally */
+  padding:0 25vw;
+  margin-bottom: 15px;
 }
 
-h2, p{
+h1{
+  max-width: 200px;
+  width: 100%;
+  margin: 0 10px;
+  height: 46px;
+}
+
+h1,h2, p{
   font-family: 'Noto Sans', sans-serif;
+}
+
+@media (max-width: 1024px) {
+  .App-header h1{
+      display: none;
+  }
+
+  .App-header{
+    padding: 15px 0;
+  }
+  
+
+  .Search_form{
+    padding: 0;
+    width: 95vw;
+  }
+  
+  .Search_form .material-symbols-outlined {
+    display: none;
+  }
+
+}
+
+
+@media (max-width: 375px) {
+  .App-header h1{
+      display: none;
+  }
+
+  .App-header{
+    padding: 15px 0;
+  }
+  
+
+  .Search_form{
+    padding: 0;
+    width: 95vw;
+  }
+  
+  .Search_form .material-symbols-outlined {
+    display: none;
+  }
+
 }

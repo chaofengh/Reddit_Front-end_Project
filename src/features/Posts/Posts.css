@@ -1,8 +1,15 @@
 /* Post.css */
+  /* Container style to ensure scrolling is possible */
+  .Posts {
+    width: 100%;
+    max-width: 600px; /* Adjust max width according to your design */
+    margin: 0 auto; /* Center the posts container */
+    padding:0 25vw; /* Add some padding */
+    overflow-y: auto; /* Allow vertical scrolling */
+  }
 
 .Post {
     width: 100%;
-    max-width: 600px; /* Adjust max width according to your design */
     margin: 20px auto; /* Center the post horizontally */
     padding: 10px;
     border: 1px solid #ddd;
@@ -24,24 +31,6 @@
     color: #333;
   }
   
-  /* Ensure the main container allows scrolling if necessary */
-  body, html {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    overflow: hidden; /* Prevent scrolling on the main page */
-  }
-  
-  /* Container style to ensure scrolling is possible */
-  .Posts {
-    width: 100%;
-    max-width: 600px; /* Adjust max width according to your design */
-    margin: 0 auto; /* Center the posts container */
-    padding:0 400px; /* Add some padding */
-    overflow-y: auto; /* Allow vertical scrolling */
-
-  }
-
   .indicators {
     display: flex;
     align-items: center;
@@ -60,4 +49,18 @@
     background-color: #E5EBEE;
     opacity: 1;
     padding: 0 5px;
+}
+
+@media (max-width: 1024px) {
+  .Posts {
+    max-width: 100%;
+    padding: 0px;
+}
+}
+
+@media (max-width: 375px) {
+  .Posts {
+    max-width: 100%;
+    padding: 0px;
+}
 }
