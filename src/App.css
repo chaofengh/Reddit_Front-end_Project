@@ -17,7 +17,7 @@ main {
   width: 100%;
   max-width: 600px; /* Set a maximum width for the header content */
   margin: 0 auto; /* Center the header content horizontally */
-  padding:0 25vw;
+  padding:0 34vw;
   margin-bottom: 15px;
 }
 

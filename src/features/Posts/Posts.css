@@ -4,7 +4,7 @@
     width: 100%;
     max-width: 600px; /* Adjust max width according to your design */
     margin: 0 auto; /* Center the posts container */
-    padding:0 25vw; /* Add some padding */
+    padding:0 34vw; /* Add some padding */
     overflow-y: auto; /* Allow vertical scrolling */
   }
 

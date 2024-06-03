@@ -1,44 +1,63 @@
 // src/features/Posts/Posts.js
 
-import React from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPosts,getPostsBySubreddit,selectFilteredPosts, selectError, selectLoading,selectSearchResults } from './PostsSlice';
+import { getPosts, getPostsBySubreddit, selectFilteredPosts, selectError, selectLoading } from './PostsSlice';
 import { Link, useParams } from 'react-router-dom';
 import Post from './Post';
 
 const Posts = () => {
     const dispatch = useDispatch();
     const posts = useSelector(selectFilteredPosts);
-    const searchResults = useSelector(selectSearchResults)
     const loading = useSelector(selectLoading);
     const error = useSelector(selectError);
-    let {subreddit}= useParams()
-    
+    const { subreddit } = useParams();
+    const containerRef = useRef(null);
 
-    
-    const loadMore = (event) => {
-        event.preventDefault();
+    const loadMore = useCallback(() => {
         const after = posts.length > 0 ? posts[posts.length - 1].name : null;
         if (subreddit) {
-            subreddit ='r/' + subreddit
-            dispatch(getPostsBySubreddit( {subreddit, after} ));
+            dispatch(getPostsBySubreddit({ subreddit: `r/${subreddit}`, after }));
         } else {
             dispatch(getPosts(after));
         }
-    };
-    const displayedPosts = searchResults.length > 0 ? searchResults : posts;
+    }, [dispatch, posts, subreddit]);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    useEffect(() => {
+        const handleScroll = () => {
+            if (containerRef.current) {
+                const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+                if (scrollTop + clientHeight >= scrollHeight - 5 && !loading) {
+                    loadMore();
+                }
+            }
+        };
+
+        const container = containerRef.current;
+        container.addEventListener('scroll', handleScroll);
+
+        return () => {
+            container.removeEventListener('scroll', handleScroll);
+        };
+    }, [loadMore, loading]);
+
+    useEffect(() => {
+        if (subreddit) {
+            dispatch(getPostsBySubreddit({ subreddit: `r/${subreddit}` }));
+        } else {
+            dispatch(getPosts());
+        }
+    }, [dispatch, subreddit]);
 
     return (
-        <div className="Posts">
-            {displayedPosts.map((post) => (
+        <div className="Posts" ref={containerRef} style={{ height: '80vh', overflowY: 'scroll' }}>
+            {posts.map((post) => (
                 <Link to={`/post/${post.permalink}`} key={post.id} style={{ textDecoration: 'none', color: 'black' }}>
                     <Post post={post} />
                 </Link>
             ))}
-            <button onClick={loadMore}>Load More</button>
+            {loading && <div>Loading...</div>}
+            {error && <div>Error: {error}</div>}
         </div>
     );
 };
