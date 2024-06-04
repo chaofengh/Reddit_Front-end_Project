@@ -14,8 +14,9 @@
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #fff;
     box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+    background-color: white;
+
   }
   
   .Post img,
@@ -38,7 +39,7 @@
     gap: 20px;
 }
 
-.indicators .Votes, .indicators.Comments {
+.indicators .Votes, .indicators.Comment_Count {
     display: flex;
     align-items: center;
     justify-content: center;

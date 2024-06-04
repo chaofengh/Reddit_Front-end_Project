@@ -46,7 +46,6 @@
 .Comment{
     border: 1px solid black;
     border-radius: 5px;
-    padding: 20px;
 }
 
 .indicators {
@@ -56,7 +55,7 @@
     gap: 20px;
 }
 
-.indicators .Votes, .indicators .Comments {
+.indicators .Votes, .indicators .Comment_Count {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,15 +70,30 @@
 
 @media (max-width: 1024px) {
     .PostDetail{
-        width: 100vw;
+        max-width: 100vw;
+        width:  100vw;
         padding: 0;
         height: auto;
+        box-sizing: border-box;
+    }
+    .PostInfo{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .Comment{
-        padding: 0;
-        width: 95vw;
+        padding: 0 1vw;
+        width: 75vw;
         height: auto;
+    }
+
+    .Comments{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     p{
@@ -91,21 +105,36 @@
     }
 
     .PostDetail video, .PostDetail img {
-        width: 95vw;
+        width: 80vw;
     }
 }
 
 @media (max-width: 375px) {
     .PostDetail{
-        width: 100vw;
+        max-width: 100vw;
+        width:  100vw;
         padding: 0;
         height: auto;
+        box-sizing: border-box;
+    }
+    .PostInfo{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .Comment{
-        padding: 0;
-        width: 95vw;
+        padding: 0 1vw;
+        width: 75vw;
         height: auto;
+    }
+
+    .Comments{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     p{
@@ -117,6 +146,6 @@
     }
 
     .PostDetail video, .PostDetail img {
-        width: 95vw;
+        width: 80vw;
     }
 }

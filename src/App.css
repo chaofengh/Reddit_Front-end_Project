@@ -1,4 +1,5 @@
 /* App.CS */
+
 main {
   display: flex;
   flex-direction: column;
@@ -7,7 +8,19 @@ main {
   height: 90vh; /* Ensure this takes the remaining height after the header */
   position: relative;
   overflow: hidden;
-
+}
+body{
+  margin: 0;
+}
+.App::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #EFEFEF; /* Light gray with 50% opacity */
+  z-index: -1; /* Place this pseudo-element behind the App container */
 }
 
 .App-header {
@@ -16,9 +29,8 @@ main {
   align-items: center;
   width: 100%;
   max-width: 600px; /* Set a maximum width for the header content */
-  margin: 0 auto; /* Center the header content horizontally */
-  padding:0 34vw;
-  margin-bottom: 15px;
+  padding:15px 34vw;
+
 }
 
 h1{
@@ -34,43 +46,41 @@ h1,h2, p{
 
 @media (max-width: 1024px) {
   .App-header h1{
-      display: none;
-  }
-
-  .App-header{
-    padding: 15px 0;
-  }
-  
-
-  .Search_form{
-    padding: 0;
-    width: 95vw;
-  }
-  
-  .Search_form .material-symbols-outlined {
     display: none;
-  }
+}
+
+.App-header{
+  padding: 15px 0;
+  width: 100vw;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+
+.Search_form{
+  padding: 0;
+  width: 80vw;
+}
 
 }
 
 
 @media (max-width: 375px) {
   .App-header h1{
-      display: none;
-  }
-
-  .App-header{
-    padding: 15px 0;
-  }
-  
-
-  .Search_form{
-    padding: 0;
-    width: 95vw;
-  }
-  
-  .Search_form .material-symbols-outlined {
     display: none;
-  }
+}
+
+.App-header{
+  padding: 15px 0;
+  width: 100vw;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+
+.Search_form{
+  padding: 0;
+  width: 80vw;
+}
 
 }

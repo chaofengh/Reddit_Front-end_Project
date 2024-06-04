@@ -26,15 +26,3 @@
 .Search_form input:hover::placeholder {
     color: black; /* Placeholder color on hover */
 }
-
-@media (max-width: 1024px) {
-    .Search_form{
-        width: 80vw;
-    }
-}
-
-@media (max-width: 375px) {
-    .Search_form{
-        width: 80vw;
-    }
-}

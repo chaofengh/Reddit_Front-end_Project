@@ -34,7 +34,7 @@ const PostDetail = () => {
         <div className="PostDetail">
             <button onClick={goBack}>Back</button>
             {postDetails && (
-                <div>
+                <div className ='PostInfo'>
                     <h2>{postDetails.title}</h2>
                     {postDetails.is_video ? (
                         <video src={postDetails.media.reddit_video.fallback_url} controls autoPlay muted loop></video>
@@ -47,7 +47,7 @@ const PostDetail = () => {
                             <span className="material-symbols-outlined">trending_up</span>
                             <span>{postDetails.ups}</span>
                         </div>
-                        <div className="Comments">
+                        <div className="Comment_Count">
                             <span className="material-symbols-outlined">comment</span>
                             <span>{postDetails.num_comments}</span>
                         </div>

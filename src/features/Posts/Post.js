@@ -31,7 +31,7 @@ const Post = ({ post }) => {
                     <span className="material-symbols-outlined">trending_up</span>
                     <span>{post.ups} </span>
                 </div>
-                <div className = 'Comments' >
+                <div className = 'Comment_Count' >
                     <span className="material-symbols-outlined">comment</span>
                     <span>{post.num_comments} </span>
                 </div>
