@@ -52,7 +52,7 @@ const Posts = () => {
     return (
         <div className="Posts" ref={containerRef} style={{ height: '80vh', overflowY: 'scroll' }}>
             {posts.map((post) => (
-                <Link to={`/post/${post.permalink}`} key={post.id} style={{ textDecoration: 'none', color: 'black' }}>
+                <Link to={`/post${post.permalink}`} key={post.id} style={{ textDecoration: 'none', color: 'black' }}>
                     <Post post={post} />
                 </Link>
             ))}

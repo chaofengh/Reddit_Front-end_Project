@@ -1,19 +1,14 @@
 import React from 'react';
 import './Posts.css';
-import { useNavigate } from 'react-router-dom';
 
 const Post = ({ post }) => {
-    const navigate = useNavigate();
     const isVideo = post.secure_media && post.secure_media.reddit_video;
     const isURLOverridden = post.url_overridden_by_dest;
     const previewImage = post.preview?.images?.[0]?.source?.url;
 
-    const handleClick = () => {
-        navigate(`/post${post.permalink}`)
-    };
 
     return (
-        <div className="Post" onClick={handleClick}>
+        <div className="Post">
             <h2>{post.title}</h2>
             {isVideo ? (
                 <video
