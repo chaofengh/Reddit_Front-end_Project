@@ -10,8 +10,7 @@ export const getPosts = createAsyncThunk('posts/getPosts', async (after = null) 
 
 // Fetch post details including comments
 export const getPostDetails = createAsyncThunk('posts/getPostDetails', async (permalink) => {
-    const response = await fetch(`https://www.reddit.com${permalink}.json`);
-    const data = await response.json();
+    const data = await Reddit.getPostInfo(permalink);
     const postData = data[0].data.children[0].data;
     const comments = data[1].data.children.map(child => child.data);
     return { permalink, postData, comments };

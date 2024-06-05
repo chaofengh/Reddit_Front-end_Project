@@ -30,6 +30,12 @@ const Reddit = {
         const response = await fetch(`${BASE_URL}/search.json?q=${query}&limit=50`);
         const data = await response.json();
         return data.data.children.map(post => post.data);
+    },
+
+    async getPostInfo(permalink){
+        const response = await fetch(`${BASE_URL}${permalink}.json`);
+        const data = await response.json();
+        return data
     }
     
 };
