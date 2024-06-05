@@ -9,12 +9,12 @@ const Post = ({ post }) => {
     const previewImage = post.preview?.images?.[0]?.source?.url;
 
     const handleClick = () => {
-        navigate(`/post${post.permalink}`);
+        navigate(`/post${post.permalink}`)
     };
 
     return (
         <div className="Post" onClick={handleClick}>
-            <h2 className='joedaddy'>{post.title}</h2>
+            <h2>{post.title}</h2>
             {isVideo ? (
                 <video
                     src={post.secure_media.reddit_video.fallback_url}
