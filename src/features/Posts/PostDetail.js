@@ -10,7 +10,7 @@ const PostDetail = () => {
     const location = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const permalink = location.pathname.replace('/post', '');
+    const permalink = location.pathname.replace('/post/', '');
     const postDetails = useSelector(state => selectPostDetails(state, permalink));
     const comments = useSelector(state => selectComments(state, permalink)) || [];
     const currentPost = useSelector(selectCurrentPost);
