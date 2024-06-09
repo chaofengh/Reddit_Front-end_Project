@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import SubReddits from './features/SubReddits/SubReddits';
 import { fetchSubReddits } from './features/SubReddits/SubRedditsSlice';
 import Search from './features/Search/Search';
+import { ScrollProvider } from './utility/ScrollContext';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const App = () => {
     }, [dispatch]);
 
     return (
+        
         <Router>
             <div className="App">
                 <SubReddits />
@@ -26,14 +28,17 @@ const App = () => {
                     <Search />
                 </header>
                 <main>
+                <ScrollProvider>
                     <Routes>
                         <Route path="/" element={<Posts />} />
                         <Route path="/r/:subreddit" element={<Posts />} />
                         <Route path="/post/*" element={<PostDetail />} />
                     </Routes>
+                </ScrollProvider>
                 </main>
             </div>
         </Router>
+        
     );
 };
 const NavigationHeader = () => {

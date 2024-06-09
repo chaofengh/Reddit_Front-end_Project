@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPosts, getPostsBySubreddit, selectFilteredPosts, selectError, selectLoading } from './PostsSlice';
 import { Link, useParams } from 'react-router-dom';
 import Post from './Post';
+import { useScroll } from '../../utility/ScrollContext';
 
 const Posts = () => {
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const Posts = () => {
     const error = useSelector(selectError);
     const { subreddit } = useParams();
     const containerRef = useRef(null);
+    const { scrollPosition, setScrollPosition } = useScroll();
 
     const loadMore = useCallback(() => {
         const after = posts.length > 0 ? posts[posts.length - 1].name : null;
@@ -30,6 +32,7 @@ const Posts = () => {
                 if (scrollTop + clientHeight >= scrollHeight - 5 && !loading) {
                     loadMore();
                 }
+                setScrollPosition(scrollTop); // Store the scroll position
             }
         };
 
@@ -39,7 +42,7 @@ const Posts = () => {
         return () => {
             container.removeEventListener('scroll', handleScroll);
         };
-    }, [loadMore, loading]);
+    }, [loadMore, loading, setScrollPosition]);
 
     useEffect(() => {
         if (subreddit) {
@@ -49,8 +52,14 @@ const Posts = () => {
         }
     }, [dispatch, subreddit]);
 
+    useEffect(() => {
+        if (containerRef.current) {
+            containerRef.current.scrollTop = scrollPosition; // Restore the scroll position
+        }
+    }, [scrollPosition]);
+
     return (
-        <div className="Posts" ref={containerRef} style={{ height: '80vh', overflowY: 'scroll' }}>
+        <div className="Posts" ref={containerRef} style={{ height: '100%', overflowY: 'scroll' }}>
             {posts.map((post) => (
                 <Link to={`/post${post.permalink}`} key={post.id} style={{ textDecoration: 'none', color: 'black' }}>
                     <Post post={post} />

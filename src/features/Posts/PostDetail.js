@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostDetails, selectPostDetails, selectCurrentPost, selectComments, selectLoading, selectError } from './PostsSlice';
 import './PostDetail.css';  // Import the CSS file
+import { useScroll } from '../../utility/ScrollContext';
 
 const PostDetail = () => {
     const location = useLocation();
@@ -16,6 +17,7 @@ const PostDetail = () => {
     const currentPost = useSelector(selectCurrentPost);
     const loading = useSelector(selectLoading);
     const error = useSelector(selectError);
+    const {scrollPosition} = useScroll();
 
     useEffect(() => {
         if (permalink && permalink !== currentPost) {
@@ -25,6 +27,9 @@ const PostDetail = () => {
 
     const goBack = () => {
         navigate('/');
+        setTimeout(() => {
+            window.scrollTo(0, scrollPosition);
+        }, 0);
     };
 
     if (loading) return <div>Loading...</div>;
