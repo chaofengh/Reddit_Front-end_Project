@@ -3,33 +3,76 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPostDetails, selectPostDetails, selectCurrentPost, selectComments, selectLoading, selectError } from './PostsSlice';
-import './PostDetail.css';  // Import the CSS file
+import {
+    getPostDetails,
+    selectPostDetails,
+    selectCurrentPost,
+    selectComments,
+    selectLoading,
+    selectError,
+} from './PostsSlice';
+import './PostDetail.css';
 import { useScroll } from '../../utility/ScrollContext';
+import Comment from './Comments/Comment';
 
 const PostDetail = () => {
     const location = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const permalink = location.pathname.replace('/post', '');
-    const postDetails = useSelector(state => selectPostDetails(state, permalink));
-    const comments = useSelector(state => selectComments(state, permalink)) || [];
+    const postDetails = useSelector((state) => selectPostDetails(state, permalink));
+    const comments = useSelector((state) => selectComments(state, permalink)) || [];
     const currentPost = useSelector(selectCurrentPost);
     const loading = useSelector(selectLoading);
     const error = useSelector(selectError);
-    const {scrollPosition} = useScroll();
+    const { scrollPosition } = useScroll();
 
     useEffect(() => {
         if (permalink && permalink !== currentPost) {
             dispatch(getPostDetails(permalink));
         }
-    }, [dispatch,permalink, currentPost]);
+    }, [dispatch, permalink, currentPost]);
 
     const goBack = () => {
         navigate('/');
         setTimeout(() => {
             window.scrollTo(0, scrollPosition);
         }, 0);
+    };
+
+    const renderMedia = () => {
+        if (postDetails.is_video) {
+            return (
+                <video
+                    src={postDetails.media.reddit_video.fallback_url}
+                    controls
+                    autoPlay
+                    muted
+                    loop
+                />
+            );
+        } else if (postDetails.media_metadata) {
+            return (
+                <div className="gallery">
+                    {Object.values(postDetails.media_metadata).map((media) => (
+                        <img
+                            key={media.id}
+                            src={media.s.u}
+                            alt={postDetails.title}
+                            className="gallery-image"
+                        />
+                    ))}
+                </div>
+            );
+        } else if (postDetails.url) {
+            return (
+                <img
+                    src={postDetails.url}
+                    alt={postDetails.title}
+                />
+            );
+        }
+        return null;
     };
 
     if (loading) return <div>Loading...</div>;
@@ -39,13 +82,9 @@ const PostDetail = () => {
         <div className="PostDetail">
             <button onClick={goBack}>Back</button>
             {postDetails && (
-                <div className ='PostInfo'>
+                <div className="PostInfo">
                     <h2>{postDetails.title}</h2>
-                    {postDetails.is_video ? (
-                        <video src={postDetails.media.reddit_video.fallback_url} controls autoPlay muted loop></video>
-                    ) : (
-                        <img src={postDetails.url_overridden_by_dest || postDetails.url} alt={postDetails.title} />
-                    )}
+                    {renderMedia()}
                     <p>{postDetails.selftext}</p>
                     <div className="indicators">
                         <div className="Votes">
@@ -60,10 +99,8 @@ const PostDetail = () => {
                 </div>
             )}
             <div className="Comments">
-                {comments.map(comment => (
-                    <div key={comment.id}>
-                        <p className="Comment">{comment.body}</p>
-                    </div>
+                {comments.map((comment) => (
+                    <Comment key={comment.id} comment={comment} />
                 ))}
             </div>
         </div>
