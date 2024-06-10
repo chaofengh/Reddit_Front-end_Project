@@ -13,7 +13,7 @@ const Reddit = {
         return data.data;
     },
     async fetchPostsBySubReddit({subreddit, limit = 50, after = null}) {
-        let url = `${BASE_URL}/${subreddit}.json?limit=${limit}`;
+        let url = `${BASE_URL}/${subreddit}.json?limit=${limit}&raw_json=1`;
         if (after) {
             url += `&after=${after}`;
         }

@@ -1,6 +1,6 @@
 // src/features/Posts/PostDetail.js
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -26,6 +26,10 @@ const PostDetail = () => {
     const loading = useSelector(selectLoading);
     const error = useSelector(selectError);
     const { scrollPosition } = useScroll();
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+
+    
 
     useEffect(() => {
         if (permalink && permalink !== currentPost) {
@@ -40,6 +44,14 @@ const PostDetail = () => {
         }, 0);
     };
 
+    const nextImage = () => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % Object.values(postDetails.media_metadata).length);
+    };
+
+    const prevImage = () => {
+        setCurrentImageIndex((prevIndex) => (prevIndex - 1 + Object.values(postDetails.media_metadata).length) % Object.values(postDetails.media_metadata).length);
+    };
+
     const renderMedia = () => {
         if (postDetails.is_video) {
             return (
@@ -52,26 +64,27 @@ const PostDetail = () => {
                 />
             );
         } else if (postDetails.media_metadata) {
+            const mediaArray = Object.values(postDetails.media_metadata);
+            const currentMedia = mediaArray[currentImageIndex];
             return (
                 <div className="gallery">
-                    {Object.values(postDetails.media_metadata).map((media) => (
+                        <button className="nav-button prev" onClick={prevImage}>❮</button>
                         <img
-                            key={media.id}
-                            src={media.s.u}
+                            src={currentMedia.s.u}
                             alt={postDetails.title}
                             className="gallery-image"
                         />
-                    ))}
+                        <button className="nav-button next" onClick={nextImage}>❯</button>
                 </div>
             );
-        } else if (postDetails.url) {
-            return (
+        } else if (postDetails.preview){
+            return(
                 <img
-                    src={postDetails.url}
-                    alt={postDetails.title}
+                    src = {postDetails.preview.images[0].source.url}
+                    alt = 'ken'
                 />
             );
-        }
+        } 
         return null;
     };
 
@@ -80,7 +93,7 @@ const PostDetail = () => {
 
     return (
         <div className="PostDetail">
-            <button onClick={goBack}>Back</button>
+            <button onClick={goBack} className ='backButton' >Back</button>
             {postDetails && (
                 <div className="PostInfo">
                     <h2>{postDetails.title}</h2>

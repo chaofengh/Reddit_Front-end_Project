@@ -12,7 +12,9 @@ const Search = () => {
     const handleSearch = (event) => {
         event.preventDefault();
         if (query.trim() !== '') {
+            console.log(query)
             dispatch(searchPosts(query));
+
         }
     };
 

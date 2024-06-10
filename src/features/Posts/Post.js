@@ -3,8 +3,8 @@ import './Posts.css';
 
 const Post = ({ post }) => {
     const isVideo = post.secure_media && post.secure_media.reddit_video;
-    const isURLOverridden = post.url_overridden_by_dest;
     const previewImage = post.preview?.images?.[0]?.source?.url;
+
 
     return (
         <div className="Post">
@@ -19,14 +19,8 @@ const Post = ({ post }) => {
                     src={previewImage}
                     alt='Preview'
                 />
-            ) : isURLOverridden ? (
-                <img
-                    src={post.url}
-                    alt='ken'
-                />
-            ) : (
-                <p></p>
-            )}
+            ) : null
+            }
             <div className='indicators'>
                 <div className='Votes'>
                     <span className="material-symbols-outlined">trending_up</span>
