@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { searchPosts } from '../Posts/PostsSlice';
+import { searchPosts,setFilter } from '../Posts/PostsSlice';
 import './Search.css';
 
 const Search = () => {
@@ -12,7 +12,7 @@ const Search = () => {
     const handleSearch = (event) => {
         event.preventDefault();
         if (query.trim() !== '') {
-            console.log(query)
+            dispatch(setFilter(null));
             dispatch(searchPosts(query));
 
         }

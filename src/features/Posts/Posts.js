@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPosts, getPostsBySubreddit, selectFilteredPosts, selectError, selectLoading } from './PostsSlice';
+import { getPosts, getPostsBySubreddit, selectFilteredPosts, selectError, selectLoading,selectSearchResults } from './PostsSlice';
 import { Link, useParams } from 'react-router-dom';
 import Post from './Post';
 import { useScroll } from '../../utility/ScrollContext';
@@ -10,6 +10,7 @@ import { useScroll } from '../../utility/ScrollContext';
 const Posts = () => {
     const dispatch = useDispatch();
     const posts = useSelector(selectFilteredPosts);
+    const searchResults = useSelector(selectSearchResults);
     const loading = useSelector(selectLoading);
     const error = useSelector(selectError);
     const { subreddit } = useParams();
@@ -58,9 +59,11 @@ const Posts = () => {
         }
     }, [scrollPosition]);
 
+    const displayedPosts = searchResults.length > 0 ? searchResults : posts;
+
     return (
         <div className="Posts" ref={containerRef} style={{ height: '100%', overflowY: 'scroll' }}>
-            {posts.map((post) => (
+            {displayedPosts.map((post) => (
                 <Link to={`/post${post.permalink}`} key={post.id} style={{ textDecoration: 'none', color: 'black' }}>
                     <Post post={post} />
                 </Link>
