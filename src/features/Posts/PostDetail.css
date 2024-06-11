@@ -7,7 +7,10 @@
     height: 90vh;
     overflow-y: auto;
 }
-
+.PostInfo{
+    display: flex;
+    flex-direction: column;
+}
 .backButton {
     background-color: #007bff;
     color: white;
@@ -36,9 +39,6 @@
     margin-bottom: 20px;
 }
 
- img{
-    max-width: 600px;
-}
 
 .Comment {
     border: 1px solid #ddd;
@@ -48,6 +48,7 @@
     background-color: #f9f9f9;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 
 .Comment p {
     margin: 0 0 10px;
@@ -98,6 +99,10 @@
         align-items: center;
     }
 
+    video{
+        max-width: 100%;
+    }
+
     .Comment {
         padding: 0 1vw;
         width: 75vw;
@@ -118,11 +123,6 @@
     h2 {
         width: 95vw;
     }
-
-    .PostDetail video,
-    .PostDetail img {
-        width: 80vw;
-    }
 }
 
 @media (max-width: 375px) {
@@ -138,6 +138,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+
+    video{
+        max-width: 100%;
     }
 
     .Comment {
@@ -161,8 +165,4 @@
         width: 95vw;
     }
 
-    .PostDetail video,
-    .PostDetail img {
-        width: 80vw;
-    }
 }

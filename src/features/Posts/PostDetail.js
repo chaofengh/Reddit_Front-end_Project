@@ -45,8 +45,6 @@ const PostDetail = () => {
                 <video
                     src={postDetails.media.reddit_video.fallback_url}
                     controls
-                    autoPlay
-                    muted
                     loop
                 />
             );
