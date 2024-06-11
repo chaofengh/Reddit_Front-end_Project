@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -12,6 +12,7 @@ import {
 import './PostDetail.css';
 import { useScroll } from '../../utility/ScrollContext';
 import Comment from './Comments/Comment';
+import { ImageSlider } from '../../utility/ImageSlider';
 
 const PostDetail = () => {
     const location = useLocation();
@@ -24,8 +25,6 @@ const PostDetail = () => {
     const loading = useSelector(selectLoading);
     const error = useSelector(selectError);
     const { scrollPosition } = useScroll();
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [transitionDirection, setTransitionDirection] = useState(''); // for transition effect
 
     useEffect(() => {
         if (permalink && permalink !== currentPost) {
@@ -40,21 +39,6 @@ const PostDetail = () => {
         }, 0);
     };
 
-    const nextImage = () => {
-        setTransitionDirection('next');
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % Object.values(postDetails.media_metadata).length);
-    };
-
-    const prevImage = () => {
-        setTransitionDirection('prev');
-        setCurrentImageIndex((prevIndex) => (prevIndex - 1 + Object.values(postDetails.media_metadata).length) % Object.values(postDetails.media_metadata).length);
-    };
-
-    const selectImage = (index) => {
-        setTransitionDirection(index > currentImageIndex ? 'next' : 'prev');
-        setCurrentImageIndex(index);
-    };
-
     const renderMedia = () => {
         if (postDetails.is_video) {
             return (
@@ -67,30 +51,11 @@ const PostDetail = () => {
                 />
             );
         } else if (postDetails.media_metadata) {
-            const mediaArray = Object.values(postDetails.media_metadata);
-            const currentMedia = mediaArray[currentImageIndex];
-            return (
-                <div className="gallery">
-                    <button className="nav-button prev" onClick={prevImage}>❮</button>
-                    <div className={`slide ${transitionDirection}`}>
-                        <img
-                            src={currentMedia.s.u}
-                            alt={postDetails.title}
-                            className="gallery-image"
-                        />
-                    </div>
-                    <button className="nav-button next" onClick={nextImage}>❯</button>
-                    <div className="dots">
-                        {mediaArray.map((_, index) => (
-                            <span
-                                key={index}
-                                className={`dot ${index === currentImageIndex ? 'active' : ''}`}
-                                onClick={() => selectImage(index)}
-                            ></span>
-                        ))}
-                    </div>
-                </div>
-            );
+            const images = Object.values(postDetails.media_metadata).map(media => ({
+                url: media.s.u,
+                alt: postDetails.title
+            }));
+            return <ImageSlider images={images} />;
         } else if (postDetails.url) {
             return (
                 <img
@@ -107,7 +72,7 @@ const PostDetail = () => {
 
     return (
         <div className="PostDetail">
-            <button onClick={goBack} className="backButton">Back</button>
+            <button onClick={goBack} className='backButton'>Back</button>
             {postDetails && (
                 <div className="PostInfo">
                     <h2>{postDetails.title}</h2>
