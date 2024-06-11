@@ -14,13 +14,17 @@ export const ImageSlider = ({ images }) => {
   };
 
   return (
-    <section aria-label="Image Slider" className="image-slider">
-
-      <a href="#after-image-slider-controls" className="skip-link">
-        Skip Image Slider Controls
-      </a>
-
+    <div aria-label="Image Slider" className="image-slider">
+        <button
+            onClick={showPrevImage}
+            className="img-slider-btn prev"
+            aria-label="View Previous Image"
+        >
+            <ArrowBigLeft aria-hidden />
+        </button>
       <div className="image-container">
+
+
         {images.map(({ url, alt }, index) => (
           <img
             key={url}
@@ -31,23 +35,15 @@ export const ImageSlider = ({ images }) => {
             style={{ transform: `translateX(${-100 * imageIndex}%)` }}
           />
         ))}
+
+        
       </div>
-
       <button
-        onClick={showPrevImage}
-        className="img-slider-btn prev"
-        aria-label="View Previous Image"
-      >
-        <ArrowBigLeft aria-hidden />
-      </button>
-
-      <button
-        onClick={showNextImage}
-        className="img-slider-btn next"
-        aria-label="View Next Image"
-      >
-        <ArrowBigRight aria-hidden />
-      </button>
+            onClick={showNextImage}
+            className="img-slider-btn next"
+            aria-label="View Next Image">
+            <ArrowBigRight aria-hidden />
+        </button>
 
       <div className="dots-container">
         {images.map((_, index) => (
@@ -65,9 +61,7 @@ export const ImageSlider = ({ images }) => {
           </button>
         ))}
       </div>
-      
-      <div id="after-image-slider-controls" />
-    </section>
+    </div>
   );
 };
 
