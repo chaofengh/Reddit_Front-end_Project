@@ -56,7 +56,7 @@ const PostDetail = () => {
                 alt: postDetails.title
             }));
             return <ImageSlider images={images} />;
-        } else if (postDetails.url) {
+        } else if (postDetails.thumbnail !== 'self') {
             return (
                 <img
                     src={postDetails.url}
