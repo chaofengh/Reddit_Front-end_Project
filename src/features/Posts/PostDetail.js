@@ -1,5 +1,3 @@
-// src/features/Posts/PostDetail.js
-
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,9 +25,7 @@ const PostDetail = () => {
     const error = useSelector(selectError);
     const { scrollPosition } = useScroll();
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-
-    
+    const [transitionDirection, setTransitionDirection] = useState(''); // for transition effect
 
     useEffect(() => {
         if (permalink && permalink !== currentPost) {
@@ -45,11 +41,18 @@ const PostDetail = () => {
     };
 
     const nextImage = () => {
+        setTransitionDirection('next');
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % Object.values(postDetails.media_metadata).length);
     };
 
     const prevImage = () => {
+        setTransitionDirection('prev');
         setCurrentImageIndex((prevIndex) => (prevIndex - 1 + Object.values(postDetails.media_metadata).length) % Object.values(postDetails.media_metadata).length);
+    };
+
+    const selectImage = (index) => {
+        setTransitionDirection(index > currentImageIndex ? 'next' : 'prev');
+        setCurrentImageIndex(index);
     };
 
     const renderMedia = () => {
@@ -68,23 +71,34 @@ const PostDetail = () => {
             const currentMedia = mediaArray[currentImageIndex];
             return (
                 <div className="gallery">
-                        <button className="nav-button prev" onClick={prevImage}>❮</button>
+                    <button className="nav-button prev" onClick={prevImage}>❮</button>
+                    <div className={`slide ${transitionDirection}`}>
                         <img
                             src={currentMedia.s.u}
                             alt={postDetails.title}
                             className="gallery-image"
                         />
-                        <button className="nav-button next" onClick={nextImage}>❯</button>
+                    </div>
+                    <button className="nav-button next" onClick={nextImage}>❯</button>
+                    <div className="dots">
+                        {mediaArray.map((_, index) => (
+                            <span
+                                key={index}
+                                className={`dot ${index === currentImageIndex ? 'active' : ''}`}
+                                onClick={() => selectImage(index)}
+                            ></span>
+                        ))}
+                    </div>
                 </div>
             );
-        } else if (postDetails.preview){
-            return(
+        } else if (postDetails.url) {
+            return (
                 <img
-                    src = {postDetails.preview.images[0].source.url}
-                    alt = 'ken'
+                    src={postDetails.url}
+                    alt={postDetails.title}
                 />
             );
-        } 
+        }
         return null;
     };
 
@@ -93,7 +107,7 @@ const PostDetail = () => {
 
     return (
         <div className="PostDetail">
-            <button onClick={goBack} className ='backButton' >Back</button>
+            <button onClick={goBack} className="backButton">Back</button>
             {postDetails && (
                 <div className="PostInfo">
                     <h2>{postDetails.title}</h2>
