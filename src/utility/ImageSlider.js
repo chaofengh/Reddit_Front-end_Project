@@ -6,11 +6,11 @@ export const ImageSlider = ({ images }) => {
   const [imageIndex, setImageIndex] = useState(0);
 
   const showNextImage = () => {
-    setImageIndex((index) => (index === images.length - 1 ? 0 : index + 1));
+    setImageIndex((index) => (index === images.length - 1 ? index : index + 1));
   };
 
   const showPrevImage = () => {
-    setImageIndex((index) => (index === 0 ? images.length - 1 : index - 1));
+    setImageIndex((index) => (index === 0 ? index : index - 1));
   };
 
   return (

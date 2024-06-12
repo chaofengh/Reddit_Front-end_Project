@@ -40,6 +40,7 @@ const PostDetail = () => {
     };
 
     const renderMedia = () => {
+
         if (postDetails.is_video) {
             return (
                 <video
@@ -54,7 +55,7 @@ const PostDetail = () => {
                 alt: postDetails.title
             }));
             return <ImageSlider images={images} />;
-        } else if (postDetails.thumbnail !== 'self') {
+        } else if (postDetails.thumbnail !== 'self' && postDetails.thumbnail !=='' ) {
             return (
                 <img
                     src={postDetails.url}

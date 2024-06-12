@@ -7,10 +7,11 @@
     background-color: #f9f9f9;
 }
 
-.Comment p {
-    margin: 0 0 10px;
-    font-size: 14px;
+.Comment p,.Comment span {
+    margin:10px;
+    font-size: 18px;
     color: #333;
+    line-height: 1.5;
 }
 
 .Comment .Comment {
