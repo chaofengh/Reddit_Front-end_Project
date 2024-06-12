@@ -1,5 +1,3 @@
-// src/features/Posts/Comments/Comment.js
-
 import React from 'react';
 import './Comment.css';
 
@@ -14,7 +12,7 @@ const Comment = ({ comment }) => {
             if (urlRegex.test(part) && imageRegex.test(part)) {
                 return <img key={index} src={part} alt="comment content" className="CommentImage" />;
             } else if (urlRegex.test(part)) {
-                return <a key={index} href={part} target="_blank" rel="noopener noreferrer">{part}</a>;
+                return <a key={index} href={part} target="_blank" rel="noopener noreferrer" className="CommentLink">{part}</a>;
             } else {
                 return <span key={index}>{part}</span>;
             }
@@ -23,7 +21,12 @@ const Comment = ({ comment }) => {
 
     return (
         <div className="Comment">
-            {renderContent()}
+            <div className="CommentAuthor">{comment.author}</div>
+            <div className="CommentBody">{renderContent()}</div>
+            <div className="CommentMeta">
+                <span>{new Date(comment.created_utc * 1000).toLocaleString()}</span>
+                <span>{comment.ups} upvotes</span>
+            </div>
             {comment.replies && comment.replies.data.children.map(reply => (
                 reply.kind === 't1' && <Comment key={reply.data.id} comment={reply.data} />
             ))}
