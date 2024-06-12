@@ -39,7 +39,20 @@
     margin-bottom: 20px;
 }
 
+.large-image {
+    width: 600px;;
+    height: auto;
+    margin-bottom: 20px;
+}
 
+.external-link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+}
 
 .indicators {
     display: flex;

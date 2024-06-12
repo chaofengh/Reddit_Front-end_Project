@@ -56,15 +56,23 @@ const PostDetail = () => {
                 alt: postDetails.title
             }));
             return <ImageSlider images={images} />;
-        } else if (postDetails.thumbnail !== 'self' && postDetails.thumbnail !=='' ) {
+        } else if (postDetails.url_overridden_by_dest === '' ) {
             return (
                 <img
-                    src={postDetails.url}
+                    src={postDetails.preview.images[0].source.url}
                     alt={postDetails.title}
                 />
             );
         }
-        return null;
+        else if(postDetails.url_overridden_by_dest){
+            return (
+                <div>
+                    <img src = {postDetails.preview.images[0].source.url} alt ={postDetails.title} className="large-image" />
+                    <a href = {postDetails.url_overridden_by_dest} className="external-link"> External Article</a>
+                </div>
+                
+            )
+        } return null
     };
 
     if (loading) return <div>Loading...</div>;
