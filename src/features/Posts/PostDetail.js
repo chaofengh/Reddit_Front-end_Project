@@ -41,7 +41,6 @@ const PostDetail = () => {
     };
 
     const renderMedia = () => {
-
         if (postDetails.is_video) {
             return (
                 <video
@@ -56,23 +55,27 @@ const PostDetail = () => {
                 alt: postDetails.title
             }));
             return <ImageSlider images={images} />;
-        } else if (postDetails.url_overridden_by_dest === '' ) {
+        } else if (postDetails.preview && postDetails.preview.images) {
+            const imageUrl = postDetails.preview.images[0].source.url;
             return (
                 <img
-                    src={postDetails.preview.images[0].source.url}
+                    src={imageUrl}
                     alt={postDetails.title}
+                    className="large-image"
                 />
             );
-        }
-        else if(postDetails.url_overridden_by_dest){
+        } else if (postDetails.url_overridden_by_dest) {
+            const imageUrl = postDetails.preview?.images[0]?.source.url;
             return (
                 <div>
-                    <img src = {postDetails.preview.images[0].source.url} alt ={postDetails.title} className="large-image" />
-                    <a href = {postDetails.url_overridden_by_dest} className="external-link"> External Article</a>
+                    {imageUrl && (
+                        <img src={imageUrl} alt={postDetails.title} className="large-image" />
+                    )}
+                    <a href={postDetails.url_overridden_by_dest} className="external-link">External Article</a>
                 </div>
-                
-            )
-        } return null
+            );
+        }
+        return null;
     };
 
     if (loading) return <div>Loading...</div>;
