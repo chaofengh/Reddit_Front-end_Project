@@ -25,7 +25,6 @@ const PostDetail = () => {
     const loading = useSelector(selectLoading);
     const error = useSelector(selectError);
     const { scrollPosition } = useScroll();
-    console.log(postDetails);
 
     useEffect(() => {
         if (permalink && permalink !== currentPost) {
