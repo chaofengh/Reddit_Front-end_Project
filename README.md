@@ -1,70 +1,103 @@
-# Getting Started with Create React App
+# Reddit Front-end Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a Reddit front-end application built using React and Redux. The application allows users to browse Reddit posts, view post details, and read comments. It includes features such as image sliders for posts with multiple images and video playback for video posts.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Browse Reddit posts
+- View detailed information about each post
+- Read comments and nested comments
+- Display images with a slider for posts containing multiple images
+- Play videos directly within the application
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- React
+- Redux
+- React Router
+- Swiper for image slider
+- CSS for styling
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/chaofengh/Reddit_Front-end_Project.git
+    ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Navigate to the project directory:
+    ```sh
+    cd reddit_frontend_project
+    ```
 
-### `npm run build`
+3. Install the dependencies:
+    ```sh
+    npm install
+    ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Usage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Start the development server:
+    ```sh
+    npm start
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Open your browser and go to `http://localhost:3000` to view the application.
 
-### `npm run eject`
+## Folder Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- `src/` - Main source directory
+  - `features/` - Contains Redux slices and components for various features
+    - `Posts/` - Components and slice for handling posts
+      - `PostDetail.js` - Component for displaying post details and comments
+      - `Post.js` - Component for displaying a single post
+      - `Comments/` - Components for handling comments
+        - `Comment.js` - Component for displaying a single comment
+  - `utility/` - Contains utility components and functions
+    - `ScrollContext.js` - Context for managing scroll position
+    - `ImageSlider.js` - Component for displaying image sliders
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Component Descriptions
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### PostDetail Component
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The `PostDetail` component is responsible for displaying the detailed view of a single post, including any media (images or videos) and comments. It uses the `ImageSlider` component for displaying multiple images.
 
-## Learn More
+### Post Component
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The `Post` component is responsible for displaying a summary of a single post, including the title, media thumbnail, and basic indicators like upvotes and comments.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Comment Component
 
-### Code Splitting
+The `Comment` component is responsible for displaying a single comment. It can also recursively display nested comments. The component formats URLs within the comment text as clickable links.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Contributing
 
-### Analyzing the Bundle Size
+If you would like to contribute to this project, please follow these steps:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Fork the repository.
+2. Create a new branch:
+    ```sh
+    git checkout -b feature/your-feature-name
+    ```
+3. Make your changes and commit them:
+    ```sh
+    git commit -m "Add some feature"
+    ```
+4. Push to the branch:
+    ```sh
+    git push origin feature/your-feature-name
+    ```
+5. Create a pull request.
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Acknowledgements
 
-### Advanced Configuration
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
+- [Swiper](https://swiperjs.com/)
+- [Reddit API](https://www.reddit.com/dev/api/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Contact
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If you have any questions or suggestions, feel free to reach out to me at cfhuang001@gmail.com.
